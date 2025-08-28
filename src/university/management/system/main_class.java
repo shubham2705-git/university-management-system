@@ -2,8 +2,10 @@ package university.management.system;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class main_class extends JFrame {
+public class main_class extends JFrame implements ActionListener {
     main_class(){
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("icon/third.jpg"));
         Image i2 = i1.getImage().getScaledInstance(1540,750, Image.SCALE_DEFAULT);
@@ -118,10 +120,12 @@ public class main_class extends JFrame {
 
         JMenuItem Calculator = new JMenuItem("Calculator");
         Calculator.setBackground(Color.WHITE);
+        Calculator.addActionListener(this);
         utility.add(Calculator);
 
         JMenuItem NotePad = new JMenuItem("NotePad");
         NotePad.setBackground(Color.white);
+        NotePad.addActionListener(this);
         utility.add(NotePad);
 
         //about
@@ -140,6 +144,7 @@ public class main_class extends JFrame {
 
         JMenuItem Exit = new JMenuItem("Exit");
         Exit.setBackground(Color.WHITE);
+        Exit.addActionListener(this);
         exit.add(Exit);
 
 
@@ -150,6 +155,27 @@ public class main_class extends JFrame {
         setSize(1540,850);
         setVisible(true);
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String sm = e.getActionCommand();
+        if(sm.equals("Exit")){
+            System.exit(15);
+        }else if(sm.equals("Calculator")){
+            try{
+                Runtime.getRuntime().exec("calc.exe");
+            }catch(Exception E){
+                E.printStackTrace();
+            }
+        }else if(sm.equals("NotePad")){
+            try{
+                Runtime.getRuntime().exec("notepad.exe");
+            }catch(Exception E){
+                E.printStackTrace();
+            }
+        }
+    }
+
     public static void main(String[] args) {
         new main_class();
     }

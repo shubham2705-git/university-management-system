@@ -9,5 +9,5 @@ public class main_class extends JFrame {
     }
     public static void main(String[] args) {
         new main_class();
-;    }
+    }
 }

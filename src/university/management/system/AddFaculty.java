@@ -4,9 +4,11 @@ import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class AddFaculty extends JFrame {
+public class AddFaculty extends JFrame implements ActionListener {
     JTextField textName,textFather,textAddress,textPhone,textEmail,textM10,textM12,textAadhar;
     JLabel empText;
     JDateChooser cdob;
@@ -121,7 +123,7 @@ public class AddFaculty extends JFrame {
         Qaulification.setBounds(50,400,200,30);
         Qaulification.setFont(new Font("serif",Font.BOLD,20));
         add(Qaulification);
-
+//======================================================================================================================
         String[] course = {"B.Tech","BBA","BCA","BSC","MSC","MBA","MCA","MCom","MA","BA"};
         courseBox = new JComboBox(course);
         courseBox.setBounds(200,400,150,30);
@@ -143,22 +145,50 @@ public class AddFaculty extends JFrame {
         submit.setBounds(250,550,120,30);
         submit.setBackground(Color.BLACK);
         submit.setForeground(Color.WHITE);
+        submit.addActionListener(this);
         add(submit);
-
+//======================================================================================================================
         cancel = new JButton("Cancel");
         cancel.setBounds(450,550,120,30);
         cancel.setBackground(Color.BLACK);
         cancel.setForeground(Color.WHITE);
+        cancel.addActionListener(this);
         add(cancel);
 //======================================================================================================================
-
-
-
 
         setSize(900,700);
         setLocation(350,50);
         setLayout(null);
         setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource()==submit){
+            String name = textName.getText();
+            String fname = textFather.getText();
+            String empid = empText.getText();
+            String dob = ((JTextField)cdob.getDateEditor().getUiComponent()).getText();
+            String address = textAddress.getText();
+            String phone = textPhone.getText();
+            String email = textEmail.getText();
+            String x = textM10.getText();
+            String xii = textM12.getText();
+            String aadhar = textAadhar.getText();
+            String course = (String)courseBox.getSelectedItem();
+            String department = (String) departmentBox.getSelectedItem();
+            try{
+                String q = "insert into teacher values('"+name+"', '"+fname+"','"+empid+"','"+dob+"','"+address+"','"+phone+"','"+email+"','"+x+"','"+xii+"','"+aadhar+"','"+course+"','"+department+"' )";
+                Conn c = new Conn();
+                c.statement.executeUpdate(q);
+                JOptionPane.showMessageDialog(null,"Details inserted");
+                setVisible(false);
+            }catch (Exception E){
+                E.printStackTrace();
+            }
+        }else{
+            setVisible(false);
+        }
     }
 
     public static void main(String[] args) {
